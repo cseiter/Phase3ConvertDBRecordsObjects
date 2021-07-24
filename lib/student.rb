@@ -23,8 +23,15 @@ class Student
     SQL
 
     DB[:conn].execute(sql_find_by_name,name).map {|row| self.new_from_db(row)}.first
-  
+
   end
+
+  def self.all_students_in_grade_9
+    sql_all_g_9 = <<-SQL
+    select * from students where grade = 9;
+    SQL
+    DB[:conn].execute(sql_all_g_9).map {|row| self.new_from_db(row)}
+  end  
   
   def save
     sql = <<-SQL
