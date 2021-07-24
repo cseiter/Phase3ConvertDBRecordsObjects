@@ -59,6 +59,13 @@ class Student
     SQL
     DB[:conn].execute(sql_first_x_in_10,x).map {|row| self.new_from_db(row)}
   end
+
+  def self.first_student_in_grade_10
+    sql_first_in_10 = <<-SQL
+    select * from students where grade = 10 order by students.id limit 1;
+    SQL
+    DB[:conn].execute(sql_first_in_10).map {|row| self.new_from_db(row)}.first
+  end
   
   def self.create_table
     sql = <<-SQL
